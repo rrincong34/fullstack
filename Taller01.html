@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+   
+      
+    <title>TALLER JAVASCRIPT BASICO  - Richard</title>
+
+
+
+</head>
+
+<body>
+    
+
+
+<script> 
+
+   
+
+
+// <!-- TALLER JAVASCRIPT BASICO -->
+
+
+// <!-- 1. Pepe desea saber cuál será su calificación final en la materia de Lógica de Programación y
+// Algoritmos. Dicha calificación se compone de los siguientes porcentajes:
+
+// - 55% promedio de tres parciales 
+// - 30% Examen Final
+// - 15% Trabajo final -->
+
+
+
+
+let calificacion
+
+let parcial1 = Number(prompt('ingresa la nota del PRIMER parcial'))
+let parcial2 = Number(prompt('ingresa la nota del SEGUNDO parcial'))
+let parcial3 = Number(prompt('ingresa la nota del TERCER parcial'))
+let examen = Number(prompt('ingresa la nota del EXAMEN FINAL'))
+let final = Number(prompt('ingresa la nota del TRABAJO FINAL'))
+
+calificacion = 0.55 * (parcial1 + parcial2 + parcial3) / 3 + 0.3 * examen + 0.15 * final
+
+alert(`tu calificación final es ${(Math.round(calificacion * 100) / 100)}`)
+
+
+// <!-- 2. Crear un algoritmo en el cual el usuario tenga que adivinar un número. Este número lo
+// creará el sistema al azar. El usuario tiene solo 10 intentos y el sistema debe mostrar si el
+// usuario está cerca o lejos de dar con el número programado por el sistema. -->
+
+
+
+let ganador = Math.round(Math.random() * (100 - 1)) + 1
+                var i = 0 
+
+
+                while ((i < 10) && apuesta != ganador) {
+                    var apuesta = Number(prompt("Intento " + (i + 1) + " de 10. Introduzca un número de 1 a 100"))
+                    if (apuesta < ganador) {
+                        alert("el número ganador es mayor");
+                    }
+                    else if (apuesta > ganador) {
+                        alert("el número ganador es menor");
+                    }
+                    else if (apuesta === ganador) {
+                        alert("¡haz ganado!, el número ganador es " + ganador + ". Número de intentos: " + (i + 1))
+                    };
+                    i++;
+                    if (i === 10) { alert("Perdiste) }
+
+                }
+
+// <!-- 3. Crear un algoritmo que pida x cantidad de números e indique el porcentaje de números
+// pares y el porcentaje de números impares. -->
+
+let num, total = 0, par = 0
+
+do {
+    total++;
+    num = Number(prompt("introduzca su número"));
+    if (num % 2 == 0) {
+        par++;
+    }
+} while (confirm("¿desea continuar?"))
+
+par = par / total 
+par = Math.round(par * 100) 
+
+document.write(`Introdujo ${total} números. De estos, el ${par}% es par, y el  ${100 - par}% es impar`);
+
+// <!-- 4. Crear un algoritmo que imprima los números del 1 al 100 y del 101 al 200. El usuario debe
+// poder escoger la opción a imprimir. -->
+
+
+
+let ini
+
+let opcion = prompt("¿desea imprimir lo números \n (1) del 1 al 100, o \n (2) del 101 al 200?", "escriba 1 o 2 según su opción")
+if (opcion == 1) {
+    ini = 1
+} else if (opcion == 2) {
+    ini = 100
+} else {
+    alert("opción no válida")
+}
+
+if (opcion == 1 || opcion == 2) {
+    for (i = 0; i <= 100; i++)
+        document.write(`${ini + i} <br>`)
+}
+
+
+// <!-- 5. Realiza un script que pida un texto e indique si es un palíndromo en un alert. Ejemplo de
+// palíndromo: “amor a roma”. -->
+
+let texto = prompt("introduzca su texto") 
+                let palindromo = true 
+                let largo = texto.length 
+                i = 0
+
+
+                while (i <= largo / 2 && palindromo === true) { 
+                    if (texto[i] != texto[largo - i - 1]) { 
+                        palindromo = false 
+                    }
+                    i++;
+                }
+
+                switch (palindromo) { 
+                    case true:
+                        alert(`El texto "${texto}" ES palíndromo`)
+                        break;
+                    case false:
+                        alert(`El texto "${texto}" NO es palíndromo`)
+                        break;
+                }
+
+
+// <!-- 6. Crear un algoritmo que almacene una lista de nombres en un arreglo y luego ordenarlos
+// alfabéticamente. No se sabe la cantidad de datos que se ingresarán. Se ingresa una lista de
+// nombres (la lista termina cuando se ingresa un espacio en blanco) si se repite un nombre,
+// el sistema debe mostrar un mensaje indicando al usuario que no debe repetir nombres y
+// continuar con la lista. -->
+
+
+
+let nombre
+                let lista = []
+                let repetido 
+
+
+                do {
+                    
+                    nombre = prompt("introduzca nombre nuevo. Si desea terminar, deje un espacio en blanco o de enter");
+
+                   
+                    repetido = false;
+                    
+                    for (i = 0; i < lista.length && repetido === false; i++) {
+                        if (nombre === lista[i]) {
+                            repetido = true;
+                        }
+                    }
+                    
+                    if (nombre !== "" && nombre !== " " && nombre !== null && repetido === false) {
+                        lista.push(nombre);
+                    } else if (repetido === true) {    
+                        alert("no debe repetir nombres");
+                    }
+                } while (nombre !== "" && nombre !== " " && nombre !== null)
+
+               
+                document.write(`Los nombres introducidos son ${lista}`)
+
+
+// <!-- 7. Crear un script que muestre una palabra o frase ingresada al revés y que indique cuántas
+// letras y espacios tiene. -->
+
+
+let frase = prompt("ingrese frase o palabra");
+
+                let arregloFrase = frase.split("");
+                let fraseReves = arregloFrase.reverse();
+                let espacios = 0;d
+
+
+                for (i = 0; i < frase.length; i++) {
+                   if(arregloFrase[i]==" "){
+                       espacios++;
+                   }
+                }
+
+                document.write(`la frase o palabra "${frase}" 
+                                al revés es "${fraseReves.join("")}"
+                                y tiene ${frase.length} letras y espacios.`);
+          
+</script>
+
+</body>
+
+</html>
