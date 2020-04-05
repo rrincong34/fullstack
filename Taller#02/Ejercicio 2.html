@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Taller JavaScript #2 - Punto 2</title>
+    <link rel="stylesheet" href="css/fontello.css">
+   <style>
+
+body {
+
+background-color: palegreen;
+
+}
+
+h2 {
+
+   text-align: center;
+
+
+}
+
+
+
+
+
+.display-result {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.box {
+    border: 1px solid black;
+    border-radius: 8px;
+    margin: .2rem;
+    padding: 2rem;
+    background-color: blueviolet;
+    font-size: x-large;
+}
+
+
+   </style>
+
+
+
+
+
+
+
+</head>
+<body>
+    <h2>Taller JavaScript #2</h2>
+    <ol start="2">
+        <li>
+            <p>Programa los siguientes botones por medio de JavaScript que realicen las siguientes funciones:</p>
+                <ul>
+                    <li >Un botón que nos permita agregar de manera secuencial los divs.</li>
+                    <li >Un botón que nos permita eliminar todos los divs.</li>
+                    <li>Un botón que nos permita eliminar todos los divs impares.</li>
+                    <li>Un botón que nos permita eliminar el div que el usuario desee</li>
+                </ul>
+            </p>
+            <p><strong>NOTA:</strong> Se debe mantener la secuencia de divs una vez de haya eliminado el último.</p>
+        </li>
+    </ol>
+    <div class="exercise">
+        
+        <ul id="menu">
+            <li><a id="link-add" href="#">agregar elemento</a></li>
+            <li><a id="link-delete-all" href="#">eliminar todos los elementos</a></li>
+            <li><a id="link-delete-odd" href="#">eliminar los elementos impares</a></li>
+            <li><a id="link-delete-this" href="#">eliminar el elemento seleccionado</a></li>
+        </ul>
+        <div class="display-result"></div>
+
+    </div>
+
+    <script >
+    
+    
+    window .onload = () => {
+    actionsOfMenu();
+}
+
+function actionsOfMenu() {
+    var ul = document .getElementById( 'menu' ),            // Obtiene el elemento UL con id 'menu'
+        listOfUl = ul .children,                            // Obtiene los elementos hijos de UL, Equivale a: ul .getElementsByTagName( 'li' );   
+        el = new Element();                                 // Instancia la clase Element
+
+    // Itera cada uno de los elementos LI dentro del UL
+    for( let li of listOfUl ) {
+        //console .log( li .lastChild .id ); 
+
+        // Agrega evento para todos los elementos 'li'
+        li .addEventListener( 'click', () => {
+            // Valida elemento 'a', hijo del elemento 'li' con un valor de 'id' específico
+            if( li .lastChild .id == 'link-add' ) {
+                console .log( 'Agrega elemento' );
+                el .newElement();
+            }
+            if( li .lastChild .id == 'link-delete-all' ) {
+                console .log( 'Elimina todos los elementos' );
+                el .deleteAllElements();
+            }
+            if( li .lastChild .id == 'link-delete-odd' ) {
+                console .log( 'Elimina todos los elementos impares' );
+                el .oddElements();
+            }
+            if( li .lastChild .id == 'link-delete-this' ) {
+                console .log( 'Elimina elemento seleccionado' );
+                el  .deleteSelectedElement();
+            }
+        });
+    }
+
+}
+class Element {
+    constructor() {
+        this .counter = 0;
+        this .lastNodeSelected = null;
+        this .dataId = null;
+        this .result = document .querySelector( '.display-result' );
+    }
+
+    newElement() {
+        this .counter++;
+        let node = document .createElement( 'div' ),
+            attrDataId = document .createAttribute( 'data-id' ),
+            attrClass = document .createAttribute( 'class' ),
+            textNode = document .createTextNode( this .counter );
+
+        node .appendChild( textNode );
+        attrDataId .value = `${ this .counter }`;    
+        attrClass .value = `box box-${ this .counter }`;    
+        node .setAttributeNode( attrDataId );
+        node .setAttributeNode( attrClass );                 // Diferente a: node .setAtribute() que requiere dos parámetros
+
+        // Agrega Evento Click al elemento creado
+        node .addEventListener( 'click', () => {
+            console .log( `Le diste click al elemento ${ node .getAttribute( 'data-id' ) }` );
+            this .dataId = node .getAttribute( 'data-id' );
+            this .changeColor( node );
+        });
+        
+        console .log( node );
+        this .result .appendChild( node );
+    }
+    deleteAllElements() {
+        // Itera el nodo que contiene los elementos agregados 
+        while ( this .result .hasChildNodes() ) {       
+           this .result .removeChild( this .result .firstChild );
+        }
+    }
+    oddElements() {
+        //console .log( this .result .children );
+
+        // Itera el nodo que contiene los elementos agregados 
+        for ( const el of this .result .children ) {
+            if( el .textContent % 2 != 0 ) {
+                console .log( ' > ', el );
+                console .log( ' > ', el .textContent );
+                this .result .removeChild( el );
+            }   
+        }
+
+    }
+    deleteSelectedElement() {
+        console .log( `Elimina ${ this .dataId }` );
+        
+        // Itera el nodo que contiene los elementos agregados 
+        for ( const el of this .result .children ) {
+            //console. log( el .getAttribute( 'data-id' ) );
+            
+            // Valida que el elemento eliminado sea el que se seleccionó previamente
+            if( this .dataId == el .getAttribute( 'data-id' ) ) {
+                //console .log( ' > ', el );
+                
+                this .result .removeChild( el );
+                this .dataId = null;
+            }   
+        }
+
+    }
+    changeColor( node ) {
+        node .style .backgroundColor = '#c41a1a';
+    }
+}
+
+
+
+    
+    </script>
+
+
+
+</body>
+</html>

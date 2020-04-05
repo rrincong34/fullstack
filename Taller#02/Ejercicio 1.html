@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+   
+      
+    <title>TALLER 2 JAVASCRIPT-Ejercicio #1  - Richard</title>
+    <link rel="stylesheet" href="css/fontello.css">
+
+
+<style>
+
+
+/* Video */
+.display-result {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+}
+#data-video {
+    margin: 0 auto;
+    width: 1024px;
+}
+
+/* External Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+body {
+
+background-color: palegreen;
+
+}
+
+h2 {
+
+   text-align: center;
+
+
+}
+
+</style>
+
+
+</head>
+<body>
+    <h2>Taller JavaScript #2</h2><br>
+    <ol>
+        <li>
+            <p>Apoyado en JavaScript crear una máscara de reproducción que nos permita manipular un elemento multimedia de la siguente forma:</p><br>
+                <ul>
+                    <li>Crear documento HTML que contenga un vídeo.</li>
+                    <li>Por medio de JavaScript permitir que el volumen sea manipulable (subir, bajar, mute).</li>
+                    <li>Debe permitir adelantar o atrasar el video a placer.</li>
+                </ul>
+            </p>
+        </li>
+    </ol>
+    <div class="exercise">
+        
+        <div class="display-result"></div>
+
+    </div>
+
+    <script >
+    
+    window .onload = () => {
+    var result = document .querySelector( '.display-result' ) ,
+        video = new Element(),
+        urlVideo = 'video/muse.mp4';
+    
+    result .appendChild( video .createExternalControls() );
+    result .appendChild( video .createVideoElement( urlVideo ) );
+    
+}
+
+/** Clase */
+class Element {
+    constructor() {
+        this .videoEl;
+    }
+    
+    createVideoElement( url ) {
+        this .videoEl = document .createElement( 'video' );
+        this .sourceEl = document .createElement( 'source' );
+
+        this .videoEl .setAttribute( 'id', 'data-video' );
+        this .sourceEl .setAttribute( 'src', url );
+        this .sourceEl .setAttribute( 'type', 'video/webm' );
+        this .videoEl .controls = true;
+
+        this .videoEl .appendChild( this .sourceEl );
+        this .videoEl .appendChild( document .createTextNode( 'Tu nagegador no soporta el tag de video' ) );
+
+        return this .videoEl;
+    }
+
+    createExternalControls() {
+        let actions = new Array( 'Play', 'Pause', 'Stop', 'Rebobinar', 'Avanzar', 'Subir', 'Bajar', 'Silenciar' ),
+            controls = document .createElement( 'div' );
+
+        controls .setAttribute( 'class', 'controls' );
+
+        actions .forEach( action => {
+            controls .appendChild( this .createButtonElement( action ) );
+        });
+
+        this .addEventControls( controls );
+
+        return controls;
+    }
+
+    createButtonElement( action ) {
+        let buttonList = document .createElement( 'button' ),
+            content = document .createTextNode( action );
+        
+        buttonList .setAttribute( 'class', action .toLowerCase() );
+        buttonList .appendChild( content );
+        //console .log( buttonList );
+
+        return buttonList;
+    }
+
+    addEventControls( controls ) {
+        let actions = controls .children,
+        volumen;
+
+        console .log( actions );
+        
+        for( let i = 0; i < actions .length; i++ ) {
+            //console .log( actions[ i ] );
+            actions[ i ] .addEventListener( 'click', () => {
+                if( actions[ i ] .getAttribute( 'class' ) == 'play' ) {
+                    this .videoPlay();
+                }
+                if( actions[ i ] .getAttribute( 'class' ) == 'stop' ) {
+                    this .videoStop();
+                }
+                if( actions[ i ] .getAttribute( 'class' ) == 'pause' ) {
+                    this .videoPause();
+                }
+                if( actions[ i ] .getAttribute( 'class' ) == 'rebobinar' ) {
+                    // TODO: Retrazar video
+                    console .log( 'Rebobina' );         
+                }
+                if( actions[ i ] .getAttribute( 'class' ) == 'avanzar' ) {
+                    // TODO: Adelantar video
+                    console .log( 'Avanza' );
+                }
+                if( actions[ i ] .getAttribute( 'class' ) == 'subir' ) {
+                    volumen = this .videoVolume( true );
+                    console .log( 'Sube volumen', volumen );
+                }
+                if( actions[ i ] .getAttribute( 'class' ) == 'bajar' ) {
+                    volumen = this .videoVolume( false );
+                    console .log( 'Baja volumen', volumen );
+                }
+                if( actions[ i ] .getAttribute( 'class' ) == 'silenciar' ) {
+                    volumen = this .videoVolume();
+                    console .log( 'Silenciado', volumen );
+                }
+            });
+            
+        }
+    }
+
+    /** Acciones de cada botón */
+    videoPlay() {
+        console .log( 'Play' );
+        this .videoEl .play();
+    }
+
+    videoPause() {
+        console .log( 'Pause' );
+        this .videoEl .pause();
+    }
+
+    videoStop() {
+        console .log( 'Stop' );
+        this .videoEl .pause();
+        this .videoEl .currentTime = 0;
+    }
+
+    videoVolume( order ) {
+        
+        if( order != undefined ) {
+            if( order ) {
+                
+                return this .videoEl .volume += 0.1;
+            }
+
+            return this .videoEl .volume -= 0.1;
+        } 
+        else {
+
+            return this .videoEl .volume = 0.0;
+        }
+        
+    }
+}
+    
+        
+    
+    
+    </script>
+
+
+
+          
+
+
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Taller JavaScript #2 - Punto 3</title>
+
+    <style>
+
+
+body {
+
+background-color: palegreen;
+
+}
+
+h2 {
+
+   text-align: center;
+
+
+}
+
+
+
+
+.display-result {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+}
+
+/* External Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+.controls > div {
+
+    
+    border-radius: 8px;
+    height: 30px;
+    margin: .3rem; 
+    padding: 1rem;
+    width: 30px;
+
+}
+
+
+    </style>
+
+
+
+
+
+</head>
+<body>
+    <h2>Taller JavaScript #2</h2>
+    <ol start="3">
+        <li>
+            <p>Realiza una página que muestre cinco cuadros de diferentes colores. Cuando el mouse pase por encima de alguno de ellos el color de fondo será del color de relleno del cuadro</p>
+        </li>
+    </ol>
+    <div class="exercise">
+        
+        <div class="display-result"></div>
+
+    </div>
+
+    <script> 
+    
+    window .onload = () => {
+    var result = document .querySelector( '.display-result' ),
+        bg = new Element();
+
+        result .appendChild( bg .createControls() );
+}
+
+class Element {
+    constructor() {
+        this .elList = document .getElementsByTagName( 'body' );
+    }
+
+    createControls() {
+        let colors = [ 'blue', 'white', 'pink', 'orange', 'black', 'green', 'purple', 'yellow', 'gray', 'greenyellow' ],
+            controls = document .createElement( 'div' );
+    
+        controls .setAttribute( 'class', 'controls' );
+    
+        colors .forEach( color => {
+            controls .appendChild( this .createColorElement( color ) );
+        });
+    
+        this .addEventControls( controls );
+    
+        return controls;
+    }
+
+    createColorElement( color ) {
+        let boxColor = document .createElement( 'div' );
+        
+        boxColor .setAttribute( 'class', color .toLowerCase() );
+        boxColor .style .backgroundColor = color .toLowerCase();
+        //console .log( boxColor );
+
+        return boxColor;
+    }
+
+    addEventControls( controls ) {
+        let colors = controls .children,
+        bgColor;
+
+        console .log( colors );
+        
+        for( let i = 0; i < colors .length; i++ ) {
+            //console .log( colors[ i ] );
+
+            colors[ i ] .addEventListener( 'mouseover', () => {
+                bgColor = colors[ i ] .getAttribute( 'class' );
+                this .elList[ 0 ] .style .background = `${ bgColor }`;
+                console .log( this .elList[ 0 ] );
+            });
+            
+        }
+    }
+
+}
+    
+    
+    </script>
+
+
+
+
+
+
+</body>
+</html>

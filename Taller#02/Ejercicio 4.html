@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Taller JavaScript #2 - Punto 4</title>
+
+    <style>
+
+
+
+body {
+
+background-color: palegreen;
+
+}
+
+h2 {
+
+   text-align: center;
+
+
+}
+
+
+.image {
+    background-position: center;
+    border: 1px dotted blue;
+    height: 768px;
+    margin: 0 auto;
+    transition: all 0.5s ease;
+    width: 1200px;
+}
+
+.display-result {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+}
+#data-video {
+    margin: 0 auto;
+    width: 1024px;
+}
+
+/* External Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+
+    </style>
+
+
+
+
+
+</head>
+<body>
+    <h2>Taller JavaScript #2</h2>
+    <ol start="4">
+        <li>
+            <p>Por medio de JavaScript crear un efecto un efecto de zoom in y zoom out a una imagen, dicho efecto debe ser controlado por un botón y el efecto debe tener una transición suave.</p>
+        </li>
+    </ol>
+    <div class="exercise">
+        
+        <div class="display-result"></div>
+
+    </div>
+
+    <script>
+
+window .onload = () => {
+    var result = document .querySelector( '.display-result' ),
+        image = new Element(),
+        urlImage = './img/1.jpg';
+
+        result .appendChild( image .createControls() );
+        result .appendChild( image .createImageElement( urlImage ) );
+}
+
+/** Clase */
+class Element {
+    constructor() {
+        this .image;
+        this .range = 20;
+        this .percentage = 160;
+    }
+    createImageElement( url ) {
+        this .image = document .createElement( 'div' );
+        this .image .style .backgroundSize = `${ this .percentage }%`;
+
+        this .image .setAttribute( 'class', 'image' );
+        this .image .style .backgroundImage = `url('${ url }')`;
+
+        return this .image;
+    }
+
+    createControls() {
+        let actions = new Array( 'in', 'out' ),
+            controls = document .createElement( 'div' );
+
+        controls .setAttribute( 'class', 'controls' );
+
+        actions .forEach( action => {
+            controls .appendChild( this .createButtonElement( action ) );
+        });
+
+        this .addEventControls( controls );
+
+        return controls;
+    }
+
+    createButtonElement( action ) {
+        let buttonList = document .createElement( 'button' ),
+            content = document .createTextNode( action );
+        
+        buttonList .setAttribute( 'class', action .toLowerCase() );
+        buttonList .appendChild( content );
+        //console .log( buttonList );
+
+        return buttonList;
+    }
+
+    addEventControls( controls ) {
+        let actions = controls .children,
+        volumen;
+
+        console .log( actions );
+        
+        for( let i = 0; i < actions .length; i++ ) {
+            //console .log( actions[ i ] );
+            actions[ i ] .addEventListener( 'click', () => {
+                if( actions[ i ] .getAttribute( 'class' ) == 'in' ) {
+                    // console .log( 'Nos acercamos!' );
+                    this .percentage += this .range;
+                }
+                if( actions[ i ] .getAttribute( 'class' ) == 'out' ) {
+                    if( this .isOriginalSize( this .percentage ) ) {
+                        // console .log( 'Nos alejamos!' );
+                        this .percentage -= this .range;
+                    }
+                }
+
+                this .image .style .backgroundSize = `${ this .percentage }% auto`;
+                console .log( this .image .style .backgroundSize );
+            });
+            
+        }
+    }
+
+    isOriginalSize( size ) {
+        return this .percentage >= 120;
+    }
+
+}
+
+
+    </script>
+
+
+
+
+</body>
+</html>
